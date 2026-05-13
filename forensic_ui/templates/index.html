@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Forensic Drug Detection System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>🧪 Forensic Drug Detection System</h1>
+    <p>Batch Image Analysis for Digital Evidence Examination</p>
+
+    <form action="/analyze" method="post" enctype="multipart/form-data">
+        <div class="upload-box">
+            <input type="file" name="files" multiple webkitdirectory>
+            <p>📂 Select Evidence Folder or Multiple Images</p>
+        </div>
+        <button type="submit">🔍 Analyze Evidence</button>
+    </form>
+
+    {% if summary %}
+    <div class="summary-panel">
+        <div class="summary-card">
+            <h3>📁 Total Images</h3>
+            <p>{{ summary.total }}</p>
+        </div>
+
+        <div class="summary-card drug">
+            <h3>🚨 Drug Detected</h3>
+            <p>{{ summary.drug }}</p>
+        </div>
+
+        <div class="summary-card non-drug">
+            <h3>✅ Non-Drug</h3>
+            <p>{{ summary.non_drug }}</p>
+        </div>
+
+        <div class="summary-card risk">
+            <h3>⚠ High Risk</h3>
+            <p>{{ summary.high_risk }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if results %}
+    <h2>📊 Analysis Results</h2>
+    <table>
+        <tr>
+            <th>Image</th>
+            <th>Prediction</th>
+            <th>Confidence</th>
+            <th>Risk</th>
+        </tr>
+
+        {% for row in results %}
+        <tr class="{{ 'drug-row' if row.prediction == 'Drug' else 'non-drug-row' }}">
+            <td>{{ row.image }}</td>
+            <td>{{ row.prediction }}</td>
+            <td>{{ row.confidence }}</td>
+            <td>{{ row.risk }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</div>
+
+</body>
+</html>

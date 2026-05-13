@@ -1,0 +1,11 @@
+venv/
+__pycache__/
+*.pyc
+dataset/
+cleaned_dataset/
+deduplicated_dataset/
+deduplicated_datasettt/
+labeled_dataset/
+*.npy
+model/
+NLP_Text_Model/
